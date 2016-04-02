@@ -1,49 +1,46 @@
 package sut.game01.core;
-
-import playn.core.Font;
-import react.UnitSlot;
-import tripleplay.game.UIScreen;
-import tripleplay.game.ScreenStack;
-import tripleplay.ui.*;
-import playn.core.Image;
-import playn.core.ImageLayer;
-import tripleplay.game.Screen;
-import tripleplay.ui.layout.AxisLayout;
 import static playn.core.PlayN.*;
 
+import playn.core.Game;
+import playn.core.Image;
+import playn.core.ImageLayer;
+import playn.core.Layer;
+import playn.core.Pointer;
+import playn.core.util.Clock;
+import sut.game01.core.character.Player;
+import tripleplay.game.Screen;
+import tripleplay.game.ScreenStack;
+import tripleplay.ui.Root;
 
-public class HomeScreen extends UIScreen{
+import java.awt.event.MouseListener;
 
-	public static final Font TITLE_FONT = graphics().createFont("Helvatica",Font.Style.PLAIN,24);
+public class HomeScreen extends Screen {
+    private Player player;
 
-	private ScreenStack ss;
-	private Root root;
-	
-	private final TestScreen testScreen;
+    public final ScreenStack ss;
+    private Root root;
+    private final Image bgImage;
+    private final ImageLayer bgLayer;
 
-	public HomeScreen(ScreenStack ss) {
-		this.ss = ss;
-		this.testScreen = new TestScreen(ss);
-	}
-  
-  	@Override
-  	public void wasShown() {
-  		super.wasShown();
-  		root = iface.createRoot(
-  			AxisLayout.vertical().gap(15),
-  			SimpleStyles.newSheet(), this.layer);
+    public HomeScreen(final ScreenStack ss) {
+        this.ss = ss;
 
-		root.addStyles(Style.BACKGROUND.is(Background.bordered(0xFFCCCCCC, 0xFF99CCFF, 5).inset(5, 10)));
-		root.setSize(width(), height());
+        bgImage = assets().getImage("images/bg.png");
+        bgLayer = graphics().createImageLayer(bgImage);
 
-		root.add(new Label("Even Driven Programming").addStyles(Style.FONT.is(HomeScreen.TITLE_FONT)));
-		Button button = new Button("Start").onClick(new UnitSlot() {
-			@Override
-			public void onEmit() {
-				ss.push(testScreen);
-			}
-		}) ;
-		root.add(button);
+    }
 
-  	}
+    @Override
+    public void wasShown() {
+        super.wasShown();
+        this.layer.add(bgLayer);
+
+        player = new Player(300f,200f);
+        this.layer.add(player.layer());
+
+    }
+    public void update(int delta) {
+        this.player.update(delta);
+    }
 }
+
