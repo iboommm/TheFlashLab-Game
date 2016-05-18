@@ -1,0 +1,24 @@
+#surefire
+#Thu Apr 21 01:41:26 ICT 2016
+testClassesDirectory=C\:\\testlab\\game01\\assets\\target\\test-classes
+forkMode=once
+classPathUrl.3=C\:\\Users\\SPARK.O\\.m2\\repository\\org\\hamcrest\\hamcrest-core\\1.3\\hamcrest-core-1.3.jar
+classPathUrl.2=C\:\\Users\\SPARK.O\\.m2\\repository\\junit\\junit\\4.11\\junit-4.11.jar
+useManifestOnlyJar=true
+classPathUrl.1=C\:\\testlab\\game01\\assets\\target\\classes
+reportsDirectory=C\:\\testlab\\game01\\assets\\target\\surefire-reports
+classPathUrl.0=C\:\\testlab\\game01\\assets\\target\\test-classes
+providerConfiguration=org.apache.maven.surefire.junit4.JUnit4Provider
+testSuiteDefinitionTestSourceDirectory=C\:\\testlab\\game01\\assets\\src\\test\\java
+surefireClassPathUrl.1=C\:\\Users\\SPARK.O\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-api\\2.10\\surefire-api-2.10.jar
+surefireClassPathUrl.0=C\:\\Users\\SPARK.O\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-junit4\\2.10\\surefire-junit4-2.10.jar
+runOrder=filesystem
+useSystemClassLoader=true
+excludes0=**/*$*
+isTrimStackTrace=true
+enableAssertions=true
+includes2=**/*TestCase.java
+failIfNoTests=false
+includes1=**/*Test.java
+includes0=**/Test*.java
+childDelegation=false
