@@ -67,7 +67,7 @@ public class Sprite {
     }
 
     /**
-     * Return the sprite {@link playn.core.ImageLayer}.
+     * Return the sprite {@link ImageLayer}.
      */
     public ImageLayer layer() {
         return layer;
@@ -95,7 +95,7 @@ public class Sprite {
      * Return true when both the sprite data and the sprite image have been loaded.
      * <p/>
      *
-     * @see #addCallback(playn.core.util.Callback)
+     * @see #addCallback(Callback)
      */
     public boolean isReady() {
         return imagesDone && dataDone;
@@ -143,7 +143,7 @@ public class Sprite {
 
     /**
      * Should be called when the sprite data and sprite image have been loaded. Will handle calling
-     * the {@link playn.core.util.Callback} of the {@link playn.sample.hello.core.sprite.Sprite}.
+     * the {@link Callback} of the {@link playn.sample.hello.core.sprite.Sprite}.
      */
     void done() {
         if (callback != null) {
@@ -173,7 +173,7 @@ public class Sprite {
 
     /**
      * Should be called if an error occurs when loading the sprite image or data. Will handle calling
-     * the {@link playn.core.util.Callback} of the {@link playn.sample.hello.core.sprite.Sprite}.
+     * the {@link Callback} of the {@link playn.sample.hello.core.sprite.Sprite}.
      */
     void error(Throwable err) {
         if (callback != null) {
