@@ -10,6 +10,7 @@ import playn.core.ImageLayer;
 import playn.core.Layer;
 import playn.core.Mouse;
 import playn.core.util.Clock;
+import sut.game01.core.Tools.RandomArrow;
 import sut.game01.core.Tools.ToolsG;
 import sut.game01.core.character.ArrowKey;
 import sut.game01.core.character.Button;
@@ -89,14 +90,12 @@ public class CutScence extends UIScreen {
         super.wasShown();
         layer.add(bg);
         layer.add(a);
+        //RandomArrow arEvent = new RandomArrow(layer,1);
+        layer.add(new ArrowKey(160f,200f,1).layer());
+        layer.add(new ArrowKey(220f,200f,3).layer());
+        layer.add(new ArrowKey(280f,200f,4).layer());
+        layer.add(new ArrowKey(340f,200f,1).layer());
 
-        layer.add(new ArrowKey(160f,100f,3).layer());
-        layer.add(new ArrowKey(220f,100f,2).layer());
-        layer.add(new ArrowKey(280f,100f,4).layer());
-        layer.add(new ArrowKey(340f,100f,4).layer());
-        layer.add(new ArrowKey(400f,100f,3).layer());
-        layer.add(new ArrowKey(460f,100f,1).layer());
-        layer.add(new ArrowKey(100f,100f,1).layer());
         //layer.add(skipLayer);
         layer.add(girl.layer());
         layer.add(player.layer());
