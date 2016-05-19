@@ -32,7 +32,7 @@ public class HomeScreen extends UIScreen{
         bt1.layer().addListener(new Mouse.LayerAdapter() {
             @Override
             public void onMouseDown(Mouse.ButtonEvent event) {
-                ss.push(new GameplayScreen(ss));
+                ss.push(new CutScence(ss));
             }
         });
         bt2.layer().addListener(new Mouse.LayerAdapter() {
