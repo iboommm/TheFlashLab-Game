@@ -82,4 +82,18 @@ public class ArrowKey {
     public Layer layer(){
         return this.sprite.layer();
     }
+
+    public void setKeyComplete(int key) {
+                if(key == 1) {
+                    sprite.setSprite(1);
+                }else if(key == 2) {
+                    sprite.setSprite(3);
+                }
+                if(key == 3) {
+                    sprite.setSprite(5);
+                }
+                if(key == 4) {
+                    sprite.setSprite(7);
+                }
+    }
 }

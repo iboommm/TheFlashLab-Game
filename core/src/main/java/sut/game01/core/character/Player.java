@@ -94,7 +94,7 @@ public class Player {
         if(!hasLoaded)return;
         e+=delta;
 
-        if(e>50){
+        if(e>150){
             switch (state){
                 case IDLE:
                     if(!(spriteIndex>=0&&spriteIndex<=4)){
