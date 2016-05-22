@@ -4,7 +4,9 @@ import playn.core.Keyboard;
 import playn.core.Layer;
 import playn.core.Mouse;
 import playn.core.util.Callback;
+import sut.game01.core.CutScence;
 import sut.game01.core.HomeScreen;
+import sut.game01.core.Tools.RandomArrow;
 import sut.game01.core.sprite.Sprite;
 import sut.game01.core.sprite.SpriteLoader;
 
@@ -18,6 +20,7 @@ public class ArrowKey {
     private float x;
     private float y;
     private int mode;
+    public static String key = "";
     String name;
 
     public ArrowKey(final float x, final float y, final int mode){
@@ -51,28 +54,58 @@ public class ArrowKey {
             }
         });
         keyboard().setListener(new Keyboard.Adapter(){
-            public void onKeyDown(Keyboard.Event event){
-                switch (event.key()){
+
+            public void onKeyDown(Keyboard.Event event) {
+                char[] a, b;
+
+                int x, y = 0;
+                switch (event.key()) {
                     case UP:
-                        if(mode == 1) {
-                            sprite.setSprite(1);
-                        }
+                        key = key + "1";
+                        System.out.println("key : " + key);
                         break;
                     case LEFT:
-                        if(mode == 2) {
-                            sprite.setSprite(3);
-                        }
+                        key = key + "2";
+                        System.out.println("key : " + key);
                         break;
                     case RIGHT:
-                        if(mode == 3) {
-                            sprite.setSprite(5);
-                        }
+                        key = key + "3";
+                        System.out.println("key : " + key);
                         break;
                     case DOWN:
-                        if(mode == 4) {
-                            sprite.setSprite(7);
-                        }
+                        key = key + "4";
+                        System.out.println("key : " + key);
                         break;
+                    case SPACE:
+
+                        break;
+
+
+                }
+                System.out.println(RandomArrow.keyOut + " " + key);
+
+                a = RandomArrow.keyOut.toCharArray();
+                b = key.toCharArray();
+                if (RandomArrow.keyOut.equals(key) == true) {
+                    CutScence.stateKey = true;
+                } else {
+
+                    for (int i = 0; i < b.length; i++) {
+                        x = b[i] - '0';
+
+                        if (a[i] == b[i]) {
+                            System.out.println("nice");
+                            System.out.println("X : " + x);
+                            CutScence.key.get("key_" + i).setKeyComplete(x);
+                        } else {
+                            for (int j = 0; j < a.length; j++) {
+                                y = a[j] - '0';
+                                CutScence.key.get("key_" + j).setKeyDefault(y);
+                            }
+                            key = "";
+
+                        }
+                    }
                 }
             }
         });
@@ -81,6 +114,20 @@ public class ArrowKey {
 
     public Layer layer(){
         return this.sprite.layer();
+    }
+
+    public void setKeyDefault(int key) {
+        if(key == 1) {
+            sprite.setSprite(0);
+        }if(key == 2) {
+            sprite.setSprite(2);
+        }
+        if(key == 3) {
+            sprite.setSprite(4);
+        }
+        if(key == 4) {
+            sprite.setSprite(6);
+        }
     }
 
     public void setKeyComplete(int key) {

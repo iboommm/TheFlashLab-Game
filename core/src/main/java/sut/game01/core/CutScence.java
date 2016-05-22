@@ -5,10 +5,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
-import playn.core.Image;
-import playn.core.ImageLayer;
-import playn.core.Layer;
-import playn.core.Mouse;
+import playn.core.*;
 import playn.core.util.Clock;
 import sut.game01.core.Tools.RandomArrow;
 import sut.game01.core.Tools.ToolsG;
@@ -20,12 +17,11 @@ import tripleplay.game.ScreenStack;
 import tripleplay.game.UIScreen;
 import tripleplay.util.Colors;
 
+import java.util.HashMap;
+
 import static playn.core.PlayN.assets;
 import static playn.core.PlayN.graphics;
 
-/**
- * Created by GTX on 18/5/2559.
- */
 public class CutScence extends UIScreen {
 
     public static  float M_PER_PIXEL = 1 / 26.666667f;
@@ -40,6 +36,10 @@ public class CutScence extends UIScreen {
     private Image bgImage;
     private ImageLayer bg;
     ToolsG toolsg = new ToolsG();
+    public static boolean stateKey = false;
+
+    public static HashMap<String,ArrowKey> key = new HashMap<String,ArrowKey>();
+
     ArrowKey ar;
     Girl girl;
 
@@ -90,15 +90,14 @@ public class CutScence extends UIScreen {
         super.wasShown();
         layer.add(bg);
         layer.add(a);
-        //RandomArrow arEvent = new RandomArrow(layer,1);
-        layer.add(new ArrowKey(160f,200f,1).layer());
-        layer.add(new ArrowKey(220f,200f,3).layer());
-        layer.add(new ArrowKey(280f,200f,4).layer());
-        layer.add(new ArrowKey(340f,200f,1).layer());
+
+
 
         //layer.add(skipLayer);
         layer.add(girl.layer());
         layer.add(player.layer());
+
+        newLoad(1);
 
     }
 
@@ -108,6 +107,17 @@ public class CutScence extends UIScreen {
         player.update(delta);
         super.update(delta);
         world.step(0.033f,10,10);
+        if(stateKey == true) {
+            for(int i = 0; i< key.size();i++) {
+                Layer a = key.get("key_" + i).layer();
+                System.out.println("remove : " + i);
+                layer.remove(a);
+            }
+            newLoad(2);
+            ArrowKey.key ="";
+            stateKey = false;
+
+        }
     }
     @Override
 
@@ -115,6 +125,15 @@ public class CutScence extends UIScreen {
         super.paint(clock);
         girl.paint(clock);
         player.paint(clock);
+    }
+
+    public void newLoad(int level) {
+        RandomArrow arEvent = new RandomArrow(layer,level);
+        key = arEvent.getHashMap();
+        for(int i = 0;i<key.size();i++){
+            layer.add(key.get("key_" + i).layer());
+        }
+        System.out.println("new key : " + RandomArrow.keyOut + " ");
     }
 
 
