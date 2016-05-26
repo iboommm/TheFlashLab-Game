@@ -32,9 +32,6 @@ public class GameplayScreen extends Screen{
     private ImageLayer bg;
     private Player player;
 
-    private Image starImage;
-    private ImageLayer star;
-
     private DebugDrawBox2D debugDraw;
     private Boolean showDebugDraw = true;
     private static HashMap<Body, String> bodies = new HashMap<Body,String>();
