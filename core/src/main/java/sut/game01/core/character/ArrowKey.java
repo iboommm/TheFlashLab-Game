@@ -21,7 +21,6 @@ public class ArrowKey {
     private float y;
     private int mode;
     public static String key = "";
-    String name;
 
     public ArrowKey(final float x, final float y, final int mode){
         this.x=x;
@@ -77,7 +76,8 @@ public class ArrowKey {
                         System.out.println("key : " + key);
                         break;
                     case SPACE:
-
+                        key = key + "0";
+                        System.out.println("key : " + key);
                         break;
 
 
@@ -98,6 +98,7 @@ public class ArrowKey {
                             System.out.println("X : " + x);
                             CutScence.key.get("key_" + i).setKeyComplete(x);
                         } else {
+
                             for (int j = 0; j < a.length; j++) {
                                 y = a[j] - '0';
                                 CutScence.key.get("key_" + j).setKeyDefault(y);

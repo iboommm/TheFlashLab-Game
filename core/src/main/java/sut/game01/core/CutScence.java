@@ -36,14 +36,17 @@ public class CutScence extends UIScreen {
     private Image bgImage;
     private ImageLayer bg;
     ToolsG toolsg = new ToolsG();
-    public static boolean stateKey = false;
 
+    public static boolean stateKey = false;
     public static HashMap<String,ArrowKey> key = new HashMap<String,ArrowKey>();
+    public Layer a,b;
+    public int score = 0;
+
 
     ArrowKey ar;
     Girl girl;
 
-    Layer a;
+
     private float alphaTest = 0;
 
     public CutScence(final ScreenStack ss){
@@ -79,6 +82,7 @@ public class CutScence extends UIScreen {
 
         this.ss = ss;
         a = toolsg.genText("Time : 08:10",30, Colors.BLACK,100,20);
+        b = toolsg.genText("คะแนน : " + score,30, Colors.BLACK,400,20);
         ar = new ArrowKey(100f,100f,1);
 
 
@@ -90,6 +94,7 @@ public class CutScence extends UIScreen {
         super.wasShown();
         layer.add(bg);
         layer.add(a);
+        layer.add(b);
 
 
 
@@ -112,8 +117,11 @@ public class CutScence extends UIScreen {
                 Layer a = key.get("key_" + i).layer();
                 System.out.println("remove : " + i);
                 layer.remove(a);
+
             }
+            updateScore();
             newLoad(2);
+            score += score + 10;
             ArrowKey.key ="";
             stateKey = false;
 
@@ -134,6 +142,12 @@ public class CutScence extends UIScreen {
             layer.add(key.get("key_" + i).layer());
         }
         System.out.println("new key : " + RandomArrow.keyOut + " ");
+    }
+
+    public void updateScore() {
+        layer.remove(b);
+        b = toolsg.genText("คะแนน : " + score,30, Colors.BLACK,400,20);
+        layer.add(b);
     }
 
 
