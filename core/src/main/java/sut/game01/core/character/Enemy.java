@@ -22,6 +22,8 @@ public class Enemy {
     private ScreenStack ss;
     private float x;
     private float y;
+
+
     FixtureDef fixtureDef;
     public int stateJump = 0;
 
@@ -45,7 +47,7 @@ public class Enemy {
                 sprite.setSprite(spriteIndex);
                 sprite.layer().setOrigin(sprite.width()/2f,sprite.height()/2f);
                 sprite.layer().setTranslation(x,y);
-                body = initPhysicsBody(world,
+                Body body = initPhysicsBody(world,
                         GameplayScreen.M_PER_PIXEL * x,
                         GameplayScreen.M_PER_PIXEL * y);
                 hasLoaded = true;
@@ -70,7 +72,7 @@ public class Enemy {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position = new Vec2(0,0);
-        Body body = world.createBody(bodyDef);
+        body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox((sprite.layer().width()+20)* GameplayScreen.M_PER_PIXEL/2,
@@ -111,6 +113,7 @@ public class Enemy {
             stateJump++;
         }
     }
+
 
     public void paint(Clock clock){
         if(!hasLoaded)return;

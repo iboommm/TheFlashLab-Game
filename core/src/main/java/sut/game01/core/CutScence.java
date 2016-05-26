@@ -1,11 +1,15 @@
 package sut.game01.core;
 
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.callbacks.DebugDraw;
+import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.contacts.Contact;
 import playn.core.*;
 import playn.core.util.Clock;
 import sut.game01.core.Tools.RandomArrow;
@@ -37,8 +41,10 @@ public class CutScence extends UIScreen {
 
     public static boolean stateKey = false;
     public static HashMap<String,ArrowKey> key = new HashMap<String,ArrowKey>();
-    public Layer a,b;
+    public Layer a,b,lifeText;
     public int score = 0;
+
+    int life = 3,attack = 0;
 
 
     ArrowKey ar;
@@ -69,6 +75,7 @@ public class CutScence extends UIScreen {
         enemy  = new Enemy(world,500f,290f);
         girl.layer().setScaleX(-1f);
 
+
         btSkip = assets().getImage("images/skip.png");
         skipLayer = graphics().createImageLayer(btSkip);
         skipLayer.setTranslation(390f,0f);
@@ -87,15 +94,75 @@ public class CutScence extends UIScreen {
         this.ss = ss;
         a = toolsg.genText("Time : 08:10",30, Colors.BLACK,100,20);
         b = toolsg.genText("คะแนน : " + score,30, Colors.BLACK,400,20);
+        lifeText = toolsg.genText("ชีวิต : " + life,30, Colors.BLACK,100,50);
         ar = new ArrowKey(100f,100f,1);
 
+        world.setContactListener(new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
 
+                Body a = contact.getFixtureA().getBody();
+                Body b = contact.getFixtureB().getBody();
+
+
+
+                if((a == player.body && b == enemy.body) || (b == player.body && a == enemy.body)) {
+                    life -= 1;
+                    layer.remove(lifeText);
+                    lifeText = toolsg.genText("ชีวิต : " + life,30, Colors.BLACK,100,50);
+                    layer.add(lifeText);
+                    attack = 1;
+                }
+
+
+                //              b.applyForce(new Vec2(5000f, -1000f), b.getPosition());  // ผัลกธรรมดา
+                //             b.applyLinearImpulse(new Vec2(100f,0),b.getPosition());  // ยิง
+
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold manifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+
+            }
+        });
+
+    }
+
+    public void removeBody() {
+        world.destroyBody(enemy.body);
+        layer.remove(enemy.layer());
+        enemy = new Enemy(world,500f,290f);
+        layer.add(enemy.layer());
     }
 
 
     @Override
     public void wasShown(){
 
+
+
+
+        super.wasShown();
+        layer.add(bg);
+        layer.add(a);
+        layer.add(b);
+        layer.add(lifeText);
+
+        //layer.add(skipLayer);
+        layer.add(girl.layer());
+        layer.add(player.layer());
+
+        layer.add(enemy.layer());
 
         if(showDebugDraw){
             CanvasImage image = graphics().createImage(
@@ -115,16 +182,6 @@ public class CutScence extends UIScreen {
 
         }
 
-        super.wasShown();
-        layer.add(bg);
-        layer.add(a);
-        layer.add(b);
-
-        //layer.add(skipLayer);
-        layer.add(girl.layer());
-        layer.add(player.layer());
-        layer.add(enemy.layer());
-
         newLoad(1);
 
     }
@@ -136,17 +193,25 @@ public class CutScence extends UIScreen {
         player.update(delta);
         enemy.update(delta);
         world.step(0.033f,10,10);
+        if(life == -1) {
+            ss.push(new GameOver(ss));
+        }
+        if(attack == 1) {
+            removeBody();
+            attack = 0;
+        }
         if(stateKey == true) {
             for(int i = 0; i< key.size();i++) {
                 Layer a = key.get("key_" + i).layer();
                 System.out.println("remove : " + i);
                 layer.remove(a);
-
             }
             layer.remove(enemy.layer());
-            enemy = new Enemy(world,500f,290f);
+            world.destroyBody(enemy.body);
+            enemy  = new Enemy(world,500f,290f);
             layer.add(enemy.layer());
             newLoad(2);
+
             score += score + 10;
             updateScore();
             ArrowKey.key ="";
