@@ -1,0 +1,7 @@
+{
+  "urls": ["images/tileset.png"],
+  "sprites":[
+    {"id": "idle_1", "url": 0, "x": 0,   "y": 0, "w": 350, "h": 43}
+
+  ]
+}

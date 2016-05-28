@@ -1,13 +1,9 @@
 package sut.game01.core.Tools;
 
 import playn.core.*;
-import sut.game01.core.GameplayScreen;
+import sut.game01.core.Setting;
 import tripleplay.game.UIScreen;
-import tripleplay.util.Colors;
 
-import javax.tools.Tool;
-
-import static playn.core.PlayN.assets;
 import static playn.core.PlayN.graphics;
 
 /**
@@ -28,8 +24,8 @@ public class ToolsG extends UIScreen {
 
     private Layer createTextLayer(TextLayout layout, Integer fontColor,Integer x,Integer y) {
         CanvasImage image = graphics().createImage(
-                (int) (width / GameplayScreen.M_PER_PIXEL),
-                (int) (height / GameplayScreen.M_PER_PIXEL));
+                (int) (width / Setting.M_PER_PIXEL),
+                (int) (height / Setting.M_PER_PIXEL));
         if (fontColor != null) image.canvas().setFillColor(fontColor);
         image.canvas().fillText(layout,x,y);
         //image.canvas().setStrokeColor(fontColor);

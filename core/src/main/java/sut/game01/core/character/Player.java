@@ -1,19 +1,15 @@
 package sut.game01.core.character;
 
-import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
-import playn.core.Keyboard;
 import playn.core.Layer;
 import playn.core.util.Callback;
 import playn.core.util.Clock;
-import sut.game01.core.GameplayScreen;
+import sut.game01.core.Setting;
 import sut.game01.core.sprite.Sprite;
 import sut.game01.core.sprite.SpriteLoader;
 import tripleplay.game.ScreenStack;
-
-import static playn.core.PlayN.keyboard;
 
 
 public class Player {
@@ -39,7 +35,7 @@ public class Player {
         this.y=y;
 
 
-        sprite = SpriteLoader.getSprite("images/player.json");
+        sprite = SpriteLoader.getSprite("images/json/player.json");
         sprite.addCallback(new Callback<Sprite>() {
             @Override
             public void onSuccess(Sprite sprite) {
@@ -47,8 +43,8 @@ public class Player {
                 sprite.layer().setOrigin(sprite.width()/2f,sprite.height()/2f);
                 sprite.layer().setTranslation(x,y);
                 body = initPhysicsBody(world,
-                        GameplayScreen.M_PER_PIXEL * x,
-                        GameplayScreen.M_PER_PIXEL * y);
+                        Setting.M_PER_PIXEL * x,
+                        Setting.M_PER_PIXEL * y);
                 hasLoaded = true;
                 System.out.println("Loaded");
                 state = State.WALK;
@@ -74,8 +70,8 @@ public class Player {
         Body body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((sprite.layer().width()+20)* GameplayScreen.M_PER_PIXEL/2,
-                sprite.layer().height()*GameplayScreen.M_PER_PIXEL/2);
+        shape.setAsBox((sprite.layer().width()+20)* Setting.M_PER_PIXEL/2,
+                sprite.layer().height()* Setting.M_PER_PIXEL/2);
 
 
         fixtureDef = new FixtureDef();
@@ -137,8 +133,8 @@ public class Player {
 
 
         sprite.layer().setTranslation(
-                (body.getPosition().x / GameplayScreen.M_PER_PIXEL),
-                (body.getPosition().y / GameplayScreen.M_PER_PIXEL));
+                (body.getPosition().x / Setting.M_PER_PIXEL),
+                (body.getPosition().y / Setting.M_PER_PIXEL));
 
         sprite.layer().setRotation(body.getAngle());
     }

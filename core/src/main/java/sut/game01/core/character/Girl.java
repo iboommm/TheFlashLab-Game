@@ -6,7 +6,7 @@ import org.jbox2d.dynamics.*;
 import playn.core.Layer;
 import playn.core.util.Callback;
 import playn.core.util.Clock;
-import sut.game01.core.GameplayScreen;
+import sut.game01.core.Setting;
 import sut.game01.core.sprite.Sprite;
 import sut.game01.core.sprite.SpriteLoader;
 import tripleplay.game.ScreenStack;
@@ -36,7 +36,7 @@ public class Girl {
     this.y=y;
 
 
-    sprite = SpriteLoader.getSprite("images/Girl.json");
+    sprite = SpriteLoader.getSprite("images/json/Girl.json");
     sprite.addCallback(new Callback<Sprite>() {
         @Override
         public void onSuccess(Sprite sprite) {
@@ -44,8 +44,8 @@ public class Girl {
             sprite.layer().setOrigin(sprite.width()/2f,sprite.height()/2f);
             sprite.layer().setTranslation(x,y);
             body = initPhysicsBody(world,
-                    GameplayScreen.M_PER_PIXEL * x,
-                    GameplayScreen.M_PER_PIXEL * y);
+                    Setting.M_PER_PIXEL * x,
+                    Setting.M_PER_PIXEL * y);
             hasLoaded = true;
             System.out.println("Loaded");
             state = State.IDLE;
@@ -71,8 +71,8 @@ public class Girl {
         Body body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((sprite.layer().width()+20)* GameplayScreen.M_PER_PIXEL/2,
-                sprite.layer().height()*GameplayScreen.M_PER_PIXEL/2);
+        shape.setAsBox((sprite.layer().width()+20)* Setting.M_PER_PIXEL/2,
+                sprite.layer().height()* Setting.M_PER_PIXEL/2);
 
 
         fixtureDef = new FixtureDef();
@@ -135,8 +135,8 @@ public class Girl {
 
 
             sprite.layer().setTranslation(
-                    (body.getPosition().x / GameplayScreen.M_PER_PIXEL),
-                    (body.getPosition().y / GameplayScreen.M_PER_PIXEL));
+                    (body.getPosition().x / Setting.M_PER_PIXEL),
+                    (body.getPosition().y / Setting.M_PER_PIXEL));
 
             sprite.layer().setRotation(body.getAngle());
             e=0;

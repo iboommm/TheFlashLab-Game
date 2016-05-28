@@ -5,10 +5,9 @@ import playn.core.*;
 import sut.game01.core.character.Button;
 import tripleplay.game.ScreenStack;
 import tripleplay.game.UIScreen;
-import tripleplay.util.Colors;
 import  sut.game01.core.Tools.*;
 
-import java.util.HashMap;
+import java.io.*;
 
 import static playn.core.PlayN.*;
 
@@ -20,11 +19,14 @@ public class HomeScreen extends UIScreen{
     ToolsG toolsg = new ToolsG();
     Button bt1 = new Button(100f,300f,"b1");
     Button bt2 = new Button(100f,370f,"b2");
+    Stage1 cc ;
 
     private float alphaTest = 0;
 
-    public HomeScreen(final ScreenStack ss){
+    public HomeScreen(final ScreenStack ss) throws FileNotFoundException {
+
         this.ss = ss;
+
 
          bgImage = assets().getImage("images/title.png");
          bg = graphics().createImageLayer(bgImage);
@@ -32,7 +34,7 @@ public class HomeScreen extends UIScreen{
         bt1.layer().addListener(new Mouse.LayerAdapter() {
             @Override
             public void onMouseDown(Mouse.ButtonEvent event) {
-                ss.push(new CutScence(ss));
+                ss.push(new Stage1(ss));
             }
         });
         bt2.layer().addListener(new Mouse.LayerAdapter() {
@@ -50,7 +52,7 @@ public class HomeScreen extends UIScreen{
         this.layer.add(bg);
         this.layer.add(bt1.layer());
         this.layer.add(bt2.layer());
-        //layer.add(toolsg.genText("test",20,Colors.WHITE,100,200));
+
 
 
     }

@@ -23,7 +23,7 @@ public class Button {
         this.y=y;
         this.mode = mode;
 
-        this.sprite = SpriteLoader.getSprite("images/Button.json");
+        this.sprite = SpriteLoader.getSprite("images/json/Button.json");
         this.sprite.addCallback(new Callback<Sprite>() {
             @Override
             public void onSuccess(Sprite sprite) {

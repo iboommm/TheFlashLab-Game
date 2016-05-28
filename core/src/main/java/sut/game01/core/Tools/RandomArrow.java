@@ -42,8 +42,7 @@ public class RandomArrow
         for(i = 0; i< keyRandom.length();i++) {
             s = Integer.valueOf(a[i] - '0');
             String b = "key_" + i;
-            key.put(b,new ArrowKey(100f + (i*60),100f,s));
-            System.out.println(b);
+            key.put(b,new ArrowKey(50f + (i*60),400f,s));
         }
     }
 
@@ -55,7 +54,7 @@ public class RandomArrow
         int s, i;
 
         if (level == 1) {
-            random = ran.nextInt(9999) + 1000;
+            random = ran.nextInt(8999) + 1000;
             char[] a;
             keyRandom = String.valueOf(random);
             a = keyRandom.toCharArray();
@@ -70,7 +69,7 @@ public class RandomArrow
             keyRandom = String.valueOf(a) + "0";
             System.out.println(keyRandom);
         }else if (level == 2) {
-            random = ran.nextInt(999999) + 100000;
+            random = ran.nextInt(899999) + 100000;
             char[] a;
             keyRandom = String.valueOf(random);
             a = keyRandom.toCharArray();
@@ -85,7 +84,7 @@ public class RandomArrow
             keyRandom = String.valueOf(a) + "0";
             System.out.println(keyRandom);
         }else if (level == 3) {
-            random = ran.nextInt(999999999);
+            random = ran.nextInt(89999999) + 10000000;
             char[] a;
             keyRandom = String.valueOf(random);
             a = keyRandom.toCharArray();
