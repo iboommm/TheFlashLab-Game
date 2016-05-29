@@ -26,16 +26,24 @@ public class Player {
     public enum State{
       IDLE,WALK,JUMP
     };
-    private State state = State.IDLE;
+    private  State state = State.IDLE;
 
     private int e =0;
+
+    public void setState(String s) {
+        if(s == "jump") {
+            state = state.JUMP;
+        }else if(s .equals("idle")) {
+            state = state.IDLE;
+        }
+    }
 
     public Player(final World world, final float x, final float y){
         this.x=x;
         this.y=y;
 
 
-        sprite = SpriteLoader.getSprite("images/json/player.json");
+        sprite = SpriteLoader.getSprite("images/man.json");
         sprite.addCallback(new Callback<Sprite>() {
             @Override
             public void onSuccess(Sprite sprite) {
@@ -103,13 +111,13 @@ public class Player {
                     }
                     break;
                 case JUMP:
-                    if(!(spriteIndex>=18&&spriteIndex<=23)){
-                        spriteIndex=18;
+                    if(!(spriteIndex>=12&&spriteIndex<=15)){
+                        spriteIndex=12;
                     }
                     break;
             }
-            if(spriteIndex==23){
-                state=State.IDLE;
+            if(spriteIndex==15){
+                state=State.WALK;
             }
             sprite.setSprite(spriteIndex);
             spriteIndex++;
@@ -122,8 +130,13 @@ public class Player {
         if(!hasLoaded)return;
         switch (state){
             case JUMP:
-                if(spriteIndex>=18 && spriteIndex<=23) {
-                    body.applyLinearImpulse(new Vec2(0, -3f), body.getPosition());
+
+                if(spriteIndex>=12 && spriteIndex<=15) {
+                    body.applyLinearImpulse(new Vec2(0, -2f), body.getPosition());
+                }
+                if(spriteIndex == 15) {
+                    spriteIndex = 0;
+                    state = state.WALK;
                 }
 
                 break;

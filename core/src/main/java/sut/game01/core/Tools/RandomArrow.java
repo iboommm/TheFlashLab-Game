@@ -43,6 +43,7 @@ public class RandomArrow
             s = Integer.valueOf(a[i] - '0');
             String b = "key_" + i;
             key.put(b,new ArrowKey(50f + (i*60),400f,s));
+            System.out.println(b);
         }
     }
 

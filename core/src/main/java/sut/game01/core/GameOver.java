@@ -1,44 +1,74 @@
 package sut.game01.core;
 
-import playn.core.Font;
 import playn.core.Mouse;
-import react.UnitSlot;
+import sut.game01.core.Tools.ToolsG;
 import tripleplay.game.UIScreen;
 import tripleplay.game.ScreenStack;
-import tripleplay.ui.*;
 import playn.core.*;
-import tripleplay.game.Screen;
-import tripleplay.ui.layout.AxisLayout;
+import tripleplay.util.Colors;
+
 import static playn.core.PlayN.*;
 
 public class GameOver extends UIScreen{
 	private final ScreenStack ss;
-  private final ImageLayer bg;
-  private final ImageLayer bt;
+    private final ImageLayer bg;
+    ToolsG tool = new ToolsG();
+    Layer txtScore,txtScore2,txtScore3,txtScore4;
+
+    Image retryImage,backImage;
+    ImageLayer retryLayer,backLayer;
   
 	public GameOver(final ScreenStack ss) {
-		this.ss = ss;
+        this.ss = ss;
 
-    Image bgImage = assets().getImage("images/bg.png");
-    this.bg = graphics().createImageLayer(bgImage);
-    
-    Image button = assets().getImage("images/back.png");
-    this.bt = graphics().createImageLayer(button);
-    bt.setTranslation(10,10);
+        Image bgImage = assets().getImage("images/gameover.jpg");
+        bg = graphics().createImageLayer(bgImage);
 
-    bt.addListener(new Mouse.LayerAdapter() {
-        @Override
-        public void onMouseUp(Mouse.ButtonEvent event) {
-          ss.push(new HomeScreen(ss));
-        }
-      });
-    
-	}
+        retryImage = assets().getImage("images/retry.png");
+        retryLayer = graphics().createImageLayer(retryImage);
+        backImage = assets().getImage("images/back.png");
+        backLayer = graphics().createImageLayer(backImage);
+        retryLayer.setTranslation(380f,280f);
+        backLayer.setTranslation(380f,360f);
+        retryLayer.addListener(new Mouse.LayerAdapter() {
+            @Override
+            public void onMouseDown(Mouse.ButtonEvent event) {
+                super.onMouseDown(event);
+                ss.remove(ss.top());
+                ss.push(new Stage(ss));
+            }
+        });
+
+        backLayer.addListener(new Mouse.LayerAdapter() {
+            @Override
+            public void onMouseDown(Mouse.ButtonEvent event) {
+                super.onMouseDown(event);
+                ss.remove(ss.top());
+                ss.push(new HomeScreen(ss));
+            }
+        });
+
+
+        txtScore = tool.genText("Score : " + Score.score ,30, Colors.BLACK,50,300);
+        txtScore2 = tool.genText("X2 : " + Score.x2 ,20, Colors.BLACK,50,340);
+        txtScore3 = tool.genText("X3 : " + Score.x3 ,20, Colors.BLACK,50,370);
+        txtScore4 = tool.genText("X4 : " + Score.x4 ,20, Colors.BLACK,50,400);
+    }
   
   	@Override
   	public void wasShown() {
   		super.wasShown();		
-      layer.add(bg);
-      layer.add(bt);
+        layer.add(bg);
+        layer.add(retryLayer);
+        layer.add(backLayer);
+        layer.add(txtScore);
+        layer.add(txtScore2);
+        layer.add(txtScore3);
+        layer.add(txtScore4);
+
+        Score.score = 0;
+        Score.x2 = 0;
+        Score.x3 = 0;
+        Score.x4 = 0;
   	}
 }

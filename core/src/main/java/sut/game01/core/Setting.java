@@ -52,7 +52,6 @@ public class Setting extends Screen{
         this.ss=ss;
 
 
-
         bgImage = assets().getImage("images/MAP1.png");
         bg = graphics().createImageLayer(bgImage);
 
@@ -101,6 +100,7 @@ public class Setting extends Screen{
     public void wasShown(){
         super.wasShown();
         this.layer.add(bg);
+
         this.layer.add(player.layer());
 
         if(showDebugDraw){
@@ -130,7 +130,6 @@ public class Setting extends Screen{
         super.update(delta);
         player.update(delta);
         world.step(0.033f,10,10);
-
 
     }
     @Override

@@ -35,12 +35,13 @@ public class Enemy {
 
     private int e =0;
 
-    public Enemy(final World world, final float x, final float y){
+    public Enemy(final World world, final float x, final float y,int stateJump){
         this.x=x;
         this.y=y;
 
+        this.stateJump = stateJump;
 
-        sprite = SpriteLoader.getSprite("images/json/enemy.json");
+        sprite = SpriteLoader.getSprite("images/enemy.json");
         sprite.addCallback(new Callback<Sprite>() {
             @Override
             public void onSuccess(Sprite sprite) {

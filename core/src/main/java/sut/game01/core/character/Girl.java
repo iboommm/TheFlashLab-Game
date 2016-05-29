@@ -36,7 +36,7 @@ public class Girl {
     this.y=y;
 
 
-    sprite = SpriteLoader.getSprite("images/json/Girl.json");
+    sprite = SpriteLoader.getSprite("images/Girl.json");
     sprite.addCallback(new Callback<Sprite>() {
         @Override
         public void onSuccess(Sprite sprite) {
