@@ -17,9 +17,11 @@ public class GameOver extends UIScreen{
 
     Image retryImage,backImage;
     ImageLayer retryLayer,backLayer;
+    Sound bgS;
   
 	public GameOver(final ScreenStack ss) {
         this.ss = ss;
+        bgS = assets().getSound("Sounds/GameOver");
 
         Image bgImage = assets().getImage("images/gameover.jpg");
         bg = graphics().createImageLayer(bgImage);
@@ -34,6 +36,7 @@ public class GameOver extends UIScreen{
             @Override
             public void onMouseDown(Mouse.ButtonEvent event) {
                 super.onMouseDown(event);
+                bgS.stop();
                 ss.remove(ss.top());
                 ss.push(new Stage(ss));
             }
@@ -43,6 +46,7 @@ public class GameOver extends UIScreen{
             @Override
             public void onMouseDown(Mouse.ButtonEvent event) {
                 super.onMouseDown(event);
+                bgS.stop();
                 ss.remove(ss.top());
                 ss.push(new HomeScreen(ss));
             }
@@ -57,6 +61,7 @@ public class GameOver extends UIScreen{
   
   	@Override
   	public void wasShown() {
+        bgS.play();
   		super.wasShown();		
         layer.add(bg);
         layer.add(retryLayer);
@@ -70,5 +75,6 @@ public class GameOver extends UIScreen{
         Score.x2 = 0;
         Score.x3 = 0;
         Score.x4 = 0;
+        Score.stage = 1;
   	}
 }

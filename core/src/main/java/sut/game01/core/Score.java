@@ -10,5 +10,6 @@ public class Score {
     public static int x4 = 0;
 
     public static int stage = 1;
+    public static int firstTime = 1;
 
 }

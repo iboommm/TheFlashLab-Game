@@ -40,6 +40,10 @@ public class Button {
                     System.out.println("mode = " + mode);
                     sprite.setSprite(2);
                     name = "Setting";
+                }else if(mode.equals("b3") == true) {
+                    System.out.println("mode = " + mode);
+                    sprite.setSprite(4);
+                    name = "ecit";
                 }
             }
 
@@ -56,6 +60,8 @@ public class Button {
                     sprite.setSprite(1);
                 }else if(mode.equals("b2") == true) {
                     sprite.setSprite(3);
+                }else if(mode.equals("b3") == true) {
+                    sprite.setSprite(5);
                 }
             }
 
@@ -66,7 +72,10 @@ public class Button {
                     sprite.setSprite(0);
                 }else if(mode.equals("b2") == true) {
                     sprite.setSprite(2);
+                }else if(mode.equals("b3") == true) {
+                    sprite.setSprite(4);
                 }
+
             }
         });
 

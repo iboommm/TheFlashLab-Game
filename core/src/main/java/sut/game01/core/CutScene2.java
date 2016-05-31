@@ -31,6 +31,8 @@ public class CutScene2 extends Screen{
     private Player player;
     private Enemy enemy;
 
+    Stage stage;
+
     private DebugDrawBox2D debugDraw;
     private Boolean showDebugDraw = false;
     private String debugSring = "";
@@ -51,9 +53,13 @@ public class CutScene2 extends Screen{
 
     int time_pause=0;
     float fade=0;
+    Sound bgS;
 
 
     public CutScene2(final ScreenStack ss){
+
+        bgS = assets().getSound("sounds/C2");
+
 
         Vec2 gravity = new Vec2(0.0f,10.0f);
         world = new World(gravity);
@@ -99,8 +105,8 @@ public class CutScene2 extends Screen{
         txt.put("txt6",txt6Layer);
         
 
-        this.player = new Player(world, 300,400);
-        this.enemy = new Enemy(world, 600,400,1);
+        this.player = new Player(world, 300f,400f);
+        this.enemy = new Enemy(world, 600f,400f,1);
 
 
 
@@ -111,6 +117,7 @@ public class CutScene2 extends Screen{
     @Override
     public void wasShown(){
         super.wasShown();
+        bgS.play();
         this.layer.add(bg);
 
         this.layer.add(player.layer());
@@ -126,6 +133,7 @@ public class CutScene2 extends Screen{
             @Override
             public void onMouseDown(Mouse.ButtonEvent event) {
                 super.onMouseDown(event);
+                bgS.stop();
                 ss.remove(ss.top());
                 ss.push(new Stage(ss));
             }
@@ -193,7 +201,17 @@ public class CutScene2 extends Screen{
         world.step(0.033f,10,10);
         time+=2;
 
-        if(txtS > txt.size()) return;
+        if(txtS == txt.size()+1) {
+            bgS.stop();
+            ss.remove(ss.top());
+            ss.push(new Stage(ss));
+        }
+
+        if(txtS > txt.size()) {
+            return;
+        }
+
+
         if(time >= 300) {
             System.out.println(txtS);
             if(show == 0) {

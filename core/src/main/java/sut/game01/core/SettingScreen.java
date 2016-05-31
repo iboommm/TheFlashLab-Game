@@ -17,6 +17,8 @@ public class SettingScreen extends Screen {
     private Image bgImage;
     private ImageLayer bg;
 
+    HomeScreen homeScreen = new HomeScreen(ss);
+
     public SettingScreen(final ScreenStack ss){
         this.ss=ss;
 
@@ -28,7 +30,7 @@ public class SettingScreen extends Screen {
                 switch (event.key()){
                     case BACK:
                         ss.remove(ss.top());
-                        ss.push(new HomeScreen(ss));
+                        ss.push(homeScreen);
                         break;
                 }
             }

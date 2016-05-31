@@ -38,7 +38,6 @@ public class CutScene1 extends Screen{
     private Boolean showDebugDraw = false;
     private String debugSring = "";
 
-
     HashMap<String, Layer> txt = new HashMap<String, Layer>();
     Image txt1,txt2,txt3,txt4;
     ImageLayer txt1Layer,txt2Layer,txt3Layer,txt4Layer;
@@ -55,9 +54,11 @@ public class CutScene1 extends Screen{
     private Image darkImage,skipImage;
     private ImageLayer darkLayer,skipLayer;
 
-
+    Sound bgS;
 
     public CutScene1(final ScreenStack ss){
+
+        bgS = assets().getSound("sounds/C1");
 
         Vec2 gravity = new Vec2(0.0f,10.0f);
         world = new World(gravity);
@@ -73,7 +74,7 @@ public class CutScene1 extends Screen{
         this.ss=ss;
         loading = new Loading(600f,435f);
 
-        bgImage = assets().getImage("images/title.png");
+        bgImage = assets().getImage("images/title2.png");
         bg = graphics().createImageLayer(bgImage);
 
         txt1 = assets().getImage("images/txt12.png");
@@ -95,17 +96,15 @@ public class CutScene1 extends Screen{
         txt.put("txt4",txt4Layer);
 
 
-        this.player = new Player(world, 100,350);
+        this.player = new Player(world,100,350 );
         this.girl = new Girl(world, 150,350);
-
-
-
 
     }
 
     @Override
     public void wasShown(){
         super.wasShown();
+        bgS.play();
         this.layer.add(bg);
         this.layer.add(player.layer());
         this.layer.add(girl.layer());
@@ -120,9 +119,10 @@ public class CutScene1 extends Screen{
         skipLayer.addListener(new Mouse.LayerAdapter() {
             @Override
             public void onMouseDown(Mouse.ButtonEvent event) {
+                bgS.stop();
                 super.onMouseDown(event);
                 ss.remove(ss.top());
-                ss.push(new Stage(ss));
+                ss.push(new CutScene2(ss));
             }
         });
 
@@ -154,7 +154,11 @@ public class CutScene1 extends Screen{
     @Override
     public void update(int delta) {
         super.update(delta);
+        player.update(delta);
+        player.layer().setTranslation(100,350);
+        girl.update(delta);
         player.setState("idle");
+        girl.setState("idle");
         world.step(0.033f,10,10);
         if(time_pause < 100) {
             loading.update(delta);
@@ -184,7 +188,15 @@ public class CutScene1 extends Screen{
 
 
         time+=2;
-        if(txtS == txt.size()) return;
+        if(txtS == txt.size()+1) {
+            bgS.stop();
+            ss.remove(ss.top());
+            ss.push(new CutScene2(ss));
+        }
+
+        if(txtS > txt.size()) {
+            return;
+        }
         if(time >= 300) {
             if(show == 0) {
                 if(fade == 0f) {

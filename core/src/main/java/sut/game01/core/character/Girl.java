@@ -11,9 +11,7 @@ import sut.game01.core.sprite.Sprite;
 import sut.game01.core.sprite.SpriteLoader;
 import tripleplay.game.ScreenStack;
 
-/**
- * Created by Administrator on 19/5/2559.
- */
+
 public class Girl {
     private Sprite sprite;
     private int spriteIndex = 0;
@@ -26,39 +24,48 @@ public class Girl {
 
 
     public enum State{
-        IDLE,WALK,JUMP
+      IDLE,WALK,JUMP
     };
-    private State state = State.IDLE;
+    private  State state = State.IDLE;
 
     private int e =0;
+
+    public void setState(String s) {
+        if(s == "jump") {
+            state = state.JUMP;
+        }else if(s .equals("idle")) {
+            state = state.IDLE;
+        }
+    }
+
     public Girl(final World world, final float x, final float y){
-    this.x=x;
-    this.y=y;
+        this.x=x;
+        this.y=y;
 
 
-    sprite = SpriteLoader.getSprite("images/Girl.json");
-    sprite.addCallback(new Callback<Sprite>() {
-        @Override
-        public void onSuccess(Sprite sprite) {
-            sprite.setSprite(spriteIndex);
-            sprite.layer().setOrigin(sprite.width()/2f,sprite.height()/2f);
-            sprite.layer().setTranslation(x,y);
-            body = initPhysicsBody(world,
-                    Setting.M_PER_PIXEL * x,
-                    Setting.M_PER_PIXEL * y);
-            hasLoaded = true;
-            System.out.println("Loaded");
-            state = State.IDLE;
-        }
+        sprite = SpriteLoader.getSprite("images/girl.json");
+        sprite.addCallback(new Callback<Sprite>() {
+            @Override
+            public void onSuccess(Sprite sprite) {
+                sprite.setSprite(spriteIndex);
+                sprite.layer().setOrigin(sprite.width()/2f,sprite.height()/2f);
+                sprite.layer().setTranslation(x,y);
+                body = initPhysicsBody(world,
+                        Setting.M_PER_PIXEL * x,
+                        Setting.M_PER_PIXEL * y);
+                hasLoaded = true;
+                System.out.println("Loaded");
+                state = State.WALK;
+            }
 
-        @Override
-        public void onFailure(Throwable throwable) {
+            @Override
+            public void onFailure(Throwable throwable) {
 
-        }
-    });
+            }
+        });
 
 
-}
+    }
 
     public Layer layer(){
         return sprite.layer();
@@ -104,13 +111,13 @@ public class Girl {
                     }
                     break;
                 case JUMP:
-                    if(!(spriteIndex>=18&&spriteIndex<=23)){
-                        spriteIndex=18;
+                    if(!(spriteIndex>=12&&spriteIndex<=15)){
+                        spriteIndex=12;
                     }
                     break;
             }
-            if(spriteIndex==23){
-                state=State.IDLE;
+            if(spriteIndex==15){
+                state= State.WALK;
             }
             sprite.setSprite(spriteIndex);
             spriteIndex++;
@@ -119,26 +126,30 @@ public class Girl {
         }
     }
 
-    public void paint(Clock clock) {
-        if (!hasLoaded) return;
+    public void paint(Clock clock){
+        if(!hasLoaded)return;
+        switch (state){
+            case JUMP:
 
-            switch (state) {
-                case JUMP:
-                    if (spriteIndex >= 18 && spriteIndex <= 23) {
-                        body.applyLinearImpulse(new Vec2(0, -3f), body.getPosition());
-                    }
+                if(spriteIndex>=12 && spriteIndex<=15) {
+                    body.applyLinearImpulse(new Vec2(0, -2f), body.getPosition());
+                }
+                if(spriteIndex == 15) {
+                    spriteIndex = 0;
+                    state = state.WALK;
+                }
 
-                    break;
-                case WALK:
-                    break;
-            }
-
-
-            sprite.layer().setTranslation(
-                    (body.getPosition().x / Setting.M_PER_PIXEL),
-                    (body.getPosition().y / Setting.M_PER_PIXEL));
-
-            sprite.layer().setRotation(body.getAngle());
-            e=0;
+                break;
+            case WALK:
+                break;
         }
+
+
+        sprite.layer().setTranslation(
+                (body.getPosition().x / Setting.M_PER_PIXEL),
+                (body.getPosition().y / Setting.M_PER_PIXEL));
+
+        sprite.layer().setRotation(body.getAngle());
     }
+
+}

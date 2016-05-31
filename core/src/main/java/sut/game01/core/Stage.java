@@ -50,13 +50,13 @@ public class Stage extends UIScreen {
     private Image x1Image,x2Image,x3Image,x4Image,failedImage,darkImage,loadingImage;
     private ImageLayer x1Layer,x2Layer,x3Layer,x4Layer,failedLayer,darkLayer,loadingLayer;
 
-    int life = 3,attack = 0,remaining=10,track=0,fadeStatus=0;
+    int life = 3,attack = 0,remaining=2,track=0,fadeStatus=0;
     int level = Score.stage;
     int bonus = 0;
 
     int hour = 8,minute=0,e=0,time_pause=0;
 
-    Sound stage = assets().getSound("sounds/Intro");
+    Sound stage = assets().getSound("sounds/Stage");
     Sound ok = assets().getSound("sounds/ok");
     Sound otk = assets().getSound("sounds/punch");
 
@@ -77,7 +77,6 @@ public class Stage extends UIScreen {
 
     public Stage(final ScreenStack ss){
         stage.play();
-
         Vec2 gravity = new Vec2(0.0f,10.0f);
         world = new World(gravity);
         world.setWarmStarting(true);
@@ -270,7 +269,8 @@ public class Stage extends UIScreen {
         }
 
 
-        if(life == 0) {
+        if(life == 0 || hour == 10) {
+            stage.stop();
             ss.remove(ss.top());
             ss.push(new GameOver(ss));
         }
@@ -424,6 +424,10 @@ public class Stage extends UIScreen {
         if(remaining == 0) {
             stage.stop();
             ss.remove(ss.top());
+            if(Score.stage == 3) {
+                ss.push(new CutScene3(ss));
+                return;
+            }
             ss.push(new Result(ss));
         }
     }
