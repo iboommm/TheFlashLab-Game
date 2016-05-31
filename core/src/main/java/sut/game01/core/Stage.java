@@ -50,7 +50,7 @@ public class Stage extends UIScreen {
     private Image x1Image,x2Image,x3Image,x4Image,failedImage,darkImage,loadingImage;
     private ImageLayer x1Layer,x2Layer,x3Layer,x4Layer,failedLayer,darkLayer,loadingLayer;
 
-    int life = 3,attack = 0,remaining=2,track=0,fadeStatus=0;
+    int life = 3,attack = 0,remaining=10,track=0,fadeStatus=0;
     int level = Score.stage;
     int bonus = 0;
 
